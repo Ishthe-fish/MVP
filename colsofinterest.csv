@@ -1,4 +1,4 @@
-col_names,data_type
-fname,string
-lname,string
-email,string
+col_names
+fname
+lname
+email
