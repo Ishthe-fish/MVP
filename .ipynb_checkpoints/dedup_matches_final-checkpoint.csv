@@ -1,0 +1,11 @@
+fname_1,fname_2,lname_1,lname_2,email_1,email_2,source_x,og_loc_x,source_y,og_loc_y,confidence_match_score
+jenny,jennifer,smith,smith,jennifer.smit@example.com,jennifer.smith@example.com,df1,3,df2,9,97.4814814814815
+jenny,jennifer,smith,smith,jennifer.smit@example.com,jennifer.smith@example.com,df1,3,df2,9,97.4814814814815
+jenny,jennifer,smith,smith,jennifer.smit@example.com,jennifer.smith@example.com,df1,3,df2,9,97.4814814814815
+micheal,michael,davis,davis,michael.d589@example.com,michael.davis@example.com,df1,5,df2,7,94.84126984126985
+micheal,michael,davis,davis,michael.d589@example.com,michael.davis@example.com,df1,5,df2,7,94.84126984126985
+micheal,michael,davis,davis,michael.d589@example.com,michael.davis@example.com,df1,5,df2,7,94.84126984126985
+thomas,thomas,rod,rodriguez,thomas.rodriguez@example.com,thomas.rodriguez@example.com,df1,0,df2,0,83.0
+thomas,thomas,rod,rodriguez,thomas.rodriguez@example.com,thomas.rodriguez@example.com,df1,0,df2,0,83.0
+karry,karen,martinez,martinez,karen.martinez@example.com,karen.martinez@example.com,df1,8,df2,1,78.83333333333334
+karry,karen,martinez,martinez,karen.martinez@example.com,karen.martinez@example.com,df1,8,df2,1,78.83333333333334
