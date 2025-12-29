@@ -43,7 +43,6 @@ To run the tool:
   
 - **Tips**:
 - Tool prioritizes **cross-table matches** (records linking df1 ↔ df2).
-- Internal duplicates (within same file) are detected via blocking but not prioritized in output.
 - To find **internal duplicates only**, run the tool on one CSV against a copy of itself (df1 vs df1).
 - String columns are auto-lowercased and stripped.
 - Output saved to `dedup_matches.csv` — sorted by confidence (higher = stronger match).
@@ -56,5 +55,4 @@ To run the tool:
 
 Feedback, issues, or feature requests welcome — always building!
 
-#Python #DataCleaning #DataEngineering #Pandas #OpenSource #DataQuality
 
