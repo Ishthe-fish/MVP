@@ -1,0 +1,21 @@
+fname,lname,dob,zipcode,city,state,political_affiliation,email
+Jon,Smith,1985-04-12,62704,Springfield,IL,Independent,john.smith@gmail.com
+Liz,Jones,1990-07-23,2116,Boston,MA,Democrat,elizabeth.jones@yahoo.com
+Michael,Johnson,1982-11-01,78745,Austin,TX,Republican,mike.j@gmail.com
+Sara,Williams,1995-02-19,80203,Denver,CO,Independent,sarah.williams@outlook.com
+Robert,Brown,1978-09-03,98101,Seattle,WA,Democrat,robert.brown@gmail.com
+Emily,Davis,1989-12-25,97205,Portland,OR,Republican,em.davis@icloud.com
+Chris,Miller,1992-06-30,43215,Columbus,OH,Democrat,chris.miller@gmail.com
+Jessica,Wilson,1986-01-14,33101,Miami,FL,Independent,jess.wilson@gmail.com
+Matt,Moore,1983-08-08,60611,Chicago,IL,Republican,mmmoore@gmail.com
+Ash,Taylor,1991-03-17,30303,Atlanta,GA,Democrat,ashleyt@yahoo.com
+Jake,Anderson,1987-05-10,92101,San Diego,CA,Independent,jake.anderson@gmail.com
+Laura,Thomas,1993-09-29,75201,Dallas,TX,Democrat,laura.t@gmail.com
+David,Jackson,1980-10-05,85001,Phoenix,AZ,Republican,david.jackson@hotmail.com
+Megan,White,1996-12-01,83702,Boise,ID,Democrat,megwhite@gmail.com
+Tony,Harris,1984-04-22,37201,Nashville,TN,Independent,anthony.harris@gmail.com
+Rachel,Martin,1992-07-02,89101,Las Vegas,NV,Republican,rachelmartin@gmail.com
+William,Thompson,1975-02-20,32801,Orlando,FL,Democrat,will.t@gmail.com
+Dan,Garcia,1988-11-09,95814,Sacramento,CA,Republican,daniel.garcia@gmail.com
+Nick,Clark,1994-05-25,27601,Raleigh,NC,Independent,nick.clark@gmail.com
+Hannah,Lewis,1997-08-13,33602,Tampa,FL,Democrat,hannah.lewis@gmail.com
