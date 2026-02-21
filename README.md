@@ -1,58 +1,166 @@
-# Dedup Matcher
+# Dedup Matcher v2 — Python + Postgres + dbt
 
-Open-source duplicate detection tool for messy cross-source CSV data.
+A warehouse-integrated duplicate detection pipeline built for messy, cross-source data.
 
-A common problem in analytics/compliance roles: the same person appears across multiple data sources (or even within one) with slight variations in name, email, etc. This tool helps identify those matches efficiently.
+What started as a standalone Python fuzzy matching script has evolved into a production-style analytics engineering workflow. This version separates compute (Python) from modeling (dbt) and treats deduplication as part of a structured warehouse system rather than a local-only script.
 
-Uses:
-- **Blocking heuristics** (prefix concatenation on multiple columns) to reduce comparisons.
-- **RapidFuzz** for accurate fuzzy similarity scoring.
-- Hybrid confidence score combining blocking strength + fuzzy match.
+---
 
-Runs locally on any two CSVs — no cloud, no setup.
+## Problem
 
-## Demo & Test Data
+In analytics, compliance, and operational roles, the same individual often appears across multiple data sources (or within one source) with slight variations:
 
-Included `master_example.csv` contains 20 fake records:
-- 10 belong to `df1.csv`
-- 10 belong to `df2.csv`
-- Intentional duplicates with variations (nicknames, typos, email differences) marked in `dupe?` column.
+- Nicknames vs. legal names  
+- Typos  
+- Email variations  
+- Formatting inconsistencies  
 
-Running the tool on this data correctly identifies 5 cross-table matches with high confidence (97–78 scores), proving it catches real-world messy duplicates.
+Identifying those duplicates accurately — without exploding comparison volume — is a common and expensive problem.
 
-## Usage Notes
+---
 
-To run the tool:
+## Architecture Overview
 
-- **Input Files**:
-  - Two CSVs to compare: name them `df1.csv` and `df2.csv` (or edit filenames in code).
-  
-- **Schema File** (`colsofinterest.csv`):
-  - Single column named exactly `col_name`.
-  - List only **string columns** to match on (e.g., fname, lname, email).
-  - Names must match CSV headers exactly.
+### 1️⃣ Raw Layer (PostgreSQL)
 
-  Example:
+- Raw CSVs are ingested into a dedicated `raw` schema in Postgres.
+- Data is preserved exactly as received.
+- Matching results from Python are written back into the warehouse.
 
-  col_name
-  fname
-  lname
-  email
+---
 
+### 2️⃣ Compute Layer (Python)
 
-  
-- **Tips**:
-- Tool prioritizes **cross-table matches** (records linking df1 ↔ df2).
-- To find **internal duplicates only**, run the tool on one CSV against a copy of itself (df1 vs df1).
-- String columns are auto-lowercased and stripped.
-- Output saved to `dedup_matches.csv` — sorted by confidence (higher = stronger match).
+- Blocking heuristics reduce comparison volume using prefix concatenation across multiple columns.
+- RapidFuzz performs fuzzy similarity scoring.
+- A hybrid confidence score combines blocking strength and fuzzy similarity.
+- Results are written to `raw.dedup_matches_final`.
 
-- **Planned for v2**:
-- Configurable thresholds
-- Numeric/date fuzzy support
-- Simple web UI
-- Better internal duplicate handling
+---
 
-Feedback, issues, or feature requests welcome — always building!
+### 3️⃣ Modeling Layer (dbt)
 
+dbt structures transformations into three layers:
 
+#### 🔹 Staging
+- Standardizes raw inputs (lowercasing, trimming, type enforcement)
+- Ensures consistent schemas
+- Prepares data for joins and scoring
+
+#### 🔹 Intermediate
+- Applies business logic
+- Joins standardized inputs with Python match results
+- Categorizes confidence scores (high / medium / low)
+- Uses window functions to remove duplicate match artifacts
+
+#### 🔹 Marts
+- Materialized as **tables** (not views)
+- Produce decision-ready datasets for stakeholder review
+- Allow teams to compare matched records directly against original sources
+- Designed for operational use and audit workflows
+
+---
+
+## Key Features
+
+- Blocking heuristics to reduce computational complexity  
+- RapidFuzz fuzzy similarity scoring  
+- Hybrid confidence scoring model  
+- Warehouse-native architecture  
+- dbt lineage documentation (`dbt docs generate`)  
+- Layered transformation structure (staging → intermediate → marts)  
+- Match score integrity validation tests  
+
+---
+
+## Demo Data
+
+The repository includes `master_example.csv` containing 20 synthetic records:
+
+- 10 belong to `df1`
+- 10 belong to `df2`
+- Intentional cross-table duplicates with realistic variations
+
+Running the pipeline correctly identifies 5 cross-table matches with high confidence scores (97–78 range), demonstrating effectiveness on messy real-world scenarios.
+
+---
+
+## How to Run
+
+### 🐍 Python Matching Engine
+
+1. Provide:
+   - `df1.csv`
+   - `df2.csv`
+   - `colsofinterest.csv`
+
+2. `colsofinterest.csv` must contain a single column named exactly:
+Example:
+col_name
+fname
+lname
+email
+
+3. Run the Python matching script.
+4. Results are saved and written into Postgres.
+
+---
+
+### 🔄 dbt Transformation
+
+1. Configure `profiles.yml` to connect to Postgres.
+2. Run:
+3. Generate documentation:
+dbt docs generate
+dbt docs serve
+
+This exposes full lineage and model documentation via a local web server.
+
+---
+
+## Architectural Evolution (v1 → v2)
+
+### v1
+- Local-only script  
+- CSV in → CSV out  
+- No warehouse integration  
+
+### v2
+- CSV → Postgres raw schema  
+- Python compute layer  
+- Results written back to warehouse  
+- dbt structured modeling  
+- Business-ready mart tables  
+- Full lineage documentation  
+
+The biggest shift is architectural.  
+Separating compute from modeling transforms this from a script into a scalable analytics engineering workflow.
+
+---
+
+## Future Improvements
+
+- Configurable confidence thresholds  
+- Numeric and date fuzzy support  
+- Incremental dbt models  
+- UI for stakeholder review  
+- Match audit logging  
+
+---
+
+## Why This Matters
+
+This project demonstrates how data quality logic can be embedded inside a warehouse-native transformation workflow rather than living as an isolated script.
+
+It reflects production-style thinking around:
+
+- Separation of concerns  
+- Schema design  
+- Materialization strategy  
+- Model layering  
+- Data lineage  
+- Business-ready outputs  
+
+---
+
+Built to explore scalable duplicate detection within a modern analytics engineering stack.
