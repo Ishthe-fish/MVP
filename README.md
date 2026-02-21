@@ -21,7 +21,7 @@ Identifying those duplicates accurately — without exploding comparison volume 
 
 ## Architecture Overview
 
-### 1️⃣ Raw Layer (PostgreSQL)
+### 1. Raw Layer (PostgreSQL)
 
 - Raw CSVs are ingested into a dedicated `raw` schema in Postgres.
 - Data is preserved exactly as received.
@@ -29,7 +29,7 @@ Identifying those duplicates accurately — without exploding comparison volume 
 
 ---
 
-### 2️⃣ Compute Layer (Python)
+### 2. Compute Layer (Python)
 
 - Blocking heuristics reduce comparison volume using prefix concatenation across multiple columns.
 - RapidFuzz performs fuzzy similarity scoring.
@@ -38,7 +38,7 @@ Identifying those duplicates accurately — without exploding comparison volume 
 
 ---
 
-### 3️⃣ Modeling Layer (dbt)
+### 3. Modeling Layer (dbt)
 
 dbt structures transformations into three layers:
 
@@ -87,7 +87,7 @@ Running the pipeline correctly identifies 5 cross-table matches with high confid
 
 ## How to Run
 
-### 🐍 Python Matching Engine
+### Python Matching Engine
 
 1. Provide:
    - `df1.csv`
@@ -106,7 +106,7 @@ email
 
 ---
 
-### 🔄 dbt Transformation
+### dbt Transformation
 
 1. Configure `profiles.yml` to connect to Postgres.
 2. Run:
